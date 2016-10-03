@@ -7,4 +7,5 @@ private:
 public:
 	Torso(string n, int pn, double w, double c, string d, int bc);
 	int get_battery_compartments();
+	string to_string();
 };

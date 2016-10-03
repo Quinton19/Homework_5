@@ -53,3 +53,15 @@ string Robot_Part::get_component_type_str()
 	else if (type == Component_type::Arm)
 		return "arm";
 }
+
+virtual string Robot_Part::to_string()
+{
+	string result;
+	result = "Name: " + get_name() + "\n"
+		+ "Part Number: " + get_part_num() + "\n"
+		+ "Weight: " + get_weight() + "\n"
+		+ "Cost: $" + get_cost() + "\n"
+		+ "Description: " + get_description() + "\n"
+		+ "Part type: " + get_component_type_str() + "\n";
+	return result;
+}

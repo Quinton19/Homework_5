@@ -7,4 +7,5 @@ private:
 public:
 	Arm(string n, int pn, double w, double c, string d, int pc);
 	int get_power_consumed();
+	string to_string();
 };

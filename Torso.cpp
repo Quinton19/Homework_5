@@ -10,3 +10,10 @@ int Torso::get_battery_compartments()
 {
 	return battery_compartments;
 }
+
+string Torso::to_string()
+{
+	string result;
+	result = to_string() + "Number of battery compartments: " + get_battery_compartments() + "\n";
+	return result;
+}

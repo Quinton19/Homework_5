@@ -9,4 +9,5 @@ public:
 	Locomotor(string n, int pn, double w, double c, string d, int ms, int pc);
 	int get_max_speed();
 	int get_power_consumed();
+	string to_string();
 };

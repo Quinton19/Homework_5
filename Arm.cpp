@@ -10,3 +10,10 @@ int Arm::get_power_consumed()
 {
 	return power_consumed;
 }
+
+string Arm::to_string()
+{
+	string result;
+	result = to_string() + "Power consumed: " + get_power_consumed() + "\n";
+	return result;
+}

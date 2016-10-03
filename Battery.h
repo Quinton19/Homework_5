@@ -7,4 +7,5 @@ private:
 public:
 	Battery(string n, int pn, double w, double c, string d, double e);
 	double get_energy_contained();
+	string to_string();
 };

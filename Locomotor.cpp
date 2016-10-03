@@ -16,3 +16,11 @@ int Locomotor::get_power_consumed()
 {
 	return power_consumed;
 }
+
+string Locomotor::to_string()
+{
+	string result;
+	result = to_string() + "Max speed: " + get_max_speed() + "\n"
+		+ "Power consumed: " + get_power_consumed() + "\n";
+	return result;
+}

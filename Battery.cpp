@@ -10,3 +10,10 @@ int Battery::get_energy_contained()
 {
 	return energy;
 }
+
+string Battery::to_string()
+{
+	string result;
+	result = to_string() + "Energy contained: " + get_energy_contained() + "\n";
+	return result;
+}

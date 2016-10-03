@@ -20,4 +20,5 @@ public:
 	string get_description();
 	Component_type get_component_type();
 	string get_component_type_str();
+	virtual string to_string();
 };
