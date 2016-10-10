@@ -1,8 +1,7 @@
 #include "Locomotor.h"
 
-Locomotor::Locomotor(string n, int pn, double w, double c, string d, int ms, int pc)
+Locomotor::Locomotor(string n, int pn, double w, double c, string d, int ms, int pc) : Robot_Part(n, pn, w, c, d, Component_type::Locomotor)
 {
-	Robot_Part(n, pn, w, c, d, Component_type::Locomotor);
 	max_speed = ms;
 	power_consumed = pc;
 }
@@ -20,7 +19,7 @@ int Locomotor::get_power_consumed()
 string Locomotor::to_string()
 {
 	string result;
-	result = to_string() + "Max speed: " + get_max_speed() + "\n"
-		+ "Power consumed: " + get_power_consumed() + "\n";
+	result = Robot_Part::to_string() + "Max speed: " + Robot_Part::to_string(get_max_speed()) + "\n"
+		+ "Power consumed: " + Robot_Part::to_string(get_power_consumed()) + "\n";
 	return result;
 }

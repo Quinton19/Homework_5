@@ -1,12 +1,11 @@
 #include "Battery.h"
 
-Battery::Battery(string n, int pn, double w, double c, string d, double e)
+Battery::Battery(string n, int pn, double w, double c, string d, double e) : Robot_Part(n, pn, w, c, d, Component_type::Battery)
 {
-	Robot_Part(n, pn, w, c, d, Component_type::Battery);
 	energy = e;
 }
 
-int Battery::get_energy_contained()
+double Battery::get_energy_contained()
 {
 	return energy;
 }
@@ -14,6 +13,6 @@ int Battery::get_energy_contained()
 string Battery::to_string()
 {
 	string result;
-	result = to_string() + "Energy contained: " + get_energy_contained() + "\n";
+	result = Robot_Part::to_string() + "Energy contained: " + Robot_Part::to_string(get_energy_contained()) + "\n";
 	return result;
 }

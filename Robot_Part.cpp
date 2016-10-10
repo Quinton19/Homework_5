@@ -1,4 +1,5 @@
 #include "Robot_Part.h"
+#include <sstream>
 
 Robot_Part::Robot_Part(string n, int pn, double w, double c, string d, Component_type t)
 {
@@ -54,14 +55,32 @@ string Robot_Part::get_component_type_str()
 		return "arm";
 }
 
-virtual string Robot_Part::to_string()
+string Robot_Part::to_string()
 {
 	string result;
 	result = "Name: " + get_name() + "\n"
-		+ "Part Number: " + get_part_num() + "\n"
-		+ "Weight: " + get_weight() + "\n"
-		+ "Cost: $" + get_cost() + "\n"
+		+ "Part Number: " + to_string(part_num) + "\n"
+		+ "Weight: " + to_string(get_weight()) + "\n"
+		+ "Cost: $" + to_string(get_cost()) + "\n"
 		+ "Description: " + get_description() + "\n"
 		+ "Part type: " + get_component_type_str() + "\n";
+	return result;
+}
+
+string Robot_Part::to_string(int n)
+{
+	string result;
+	ostringstream convert;
+	convert << n;
+	result = convert.str();
+	return result;
+}
+
+string Robot_Part::to_string(double d)
+{
+	string result;
+	ostringstream convert;
+	convert << d;
+	result = convert.str();
 	return result;
 }
