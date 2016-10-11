@@ -2,7 +2,7 @@ all: main
 rebuild: clean main
 
 main: robot_part.o controller.o view.o head.o arm.o locomotor.o torso.o battery.o main.o
-	g++ robot_part.o controller.o view.o head.o arm.o locomotor.o torso.o battery.o
+	g++ robot_part.o controller.o view.o head.o arm.o locomotor.o torso.o battery.o main.o
 
 main.o: main.cpp controller.h
 	g++ -std=c++11 -c main.cpp

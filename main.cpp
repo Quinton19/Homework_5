@@ -2,7 +2,7 @@
 
 int main()
 {
-	Controller c();
+	Controller c;
 	c.cli();
 	return 1;
 }

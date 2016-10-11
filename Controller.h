@@ -4,7 +4,7 @@ class Controller
 {
 private:
 	int rand_num;
-	Robot_Part rand_part;
+	Robot_Part* rand_part;
 	View view;
 public:
 	Controller();
