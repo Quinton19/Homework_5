@@ -4,10 +4,10 @@ class Locomotor : public Robot_Part
 {
 private:
 	int max_speed;
-	int power_consumed;
+	double power_consumed;
 public:
-	Locomotor(string n, int pn, double w, double c, string d, int ms, int pc);
+	Locomotor(string n, int pn, double w, double c, string d, int ms, double pc);
 	int get_max_speed();
-	int get_power_consumed();
+	double get_power_consumed();
 	string to_string();
 };
