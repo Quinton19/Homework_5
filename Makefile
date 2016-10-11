@@ -1,8 +1,8 @@
 all: main
 rebuild: clean main
 
-main: robot_part.o controller.o view.o head.o arm.o locomotor.o torso.o battery.o main.o helper_functions.o
-	g++ robot_part.o controller.o view.o head.o arm.o locomotor.o torso.o battery.o main.o helper_functions.o
+main: robot_part.o controller.o view.o head.o arm.o locomotor.o torso.o battery.o main.o helper_functions.o robot_model.o
+	g++ robot_part.o controller.o view.o head.o arm.o locomotor.o torso.o battery.o main.o helper_functions.o robot_model.o
 
 test: robot_part.o head.o arm.o locomotor.o torso.o battery.o helper_functions.o test.o
 	g++ robot_part.o head.o arm.o locomotor.o torso.o battery.o helper_functions.o test.o
@@ -29,6 +29,8 @@ battery.o: Battery.cpp Battery.h Robot_Part.h helper_functions.h
 	g++ -std=c++11 -c Battery.cpp
 helper_functions.o: helper_functions.cpp helper_functions.h
 	g++ -std=c++11 -c helper_functions.cpp
+robot_model.o: Robot_Model.cpp Robot_Model.h Robot_Part.h Arm.h Torso.h Locomotor.h Head.h Battery.h helper_functions.h
+	g++ -std=c++11 -c Robot_Model.cpp
 
 
 clean:

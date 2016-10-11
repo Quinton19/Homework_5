@@ -7,7 +7,7 @@ private:
 	double power_consumed;
 public:
 	Locomotor(string n, int pn, double w, double c, string d, int ms, double pc);
-	int get_max_speed();
-	double get_power_consumed();
+	int get_max_speed(); //units: mph
+	double get_power_consumed(); //units: watts
 	string to_string();
 };

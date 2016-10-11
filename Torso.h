@@ -1,5 +1,7 @@
 #include "Robot_Part.h"
 
+class Compartment_Limit{};
+
 class Torso : public Robot_Part
 {
 private:
