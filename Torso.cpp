@@ -13,6 +13,6 @@ int Torso::get_battery_compartments()
 string Torso::to_string()
 {
 	string result;
-	result = Robot_Part::to_string() + "Number of battery compartments: " + Robot_Part::to_string(get_battery_compartments()) + "\n";
+	result = Robot_Part::to_string() + "Number of battery compartments: " + Str_conversion::to_string(get_battery_compartments()) + "\n";
 	return result;
 }

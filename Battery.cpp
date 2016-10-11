@@ -13,6 +13,6 @@ double Battery::get_energy_contained()
 string Battery::to_string()
 {
 	string result;
-	result = Robot_Part::to_string() + "Energy contained: " + Robot_Part::to_string(get_energy_contained()) + "\n";
+	result = Robot_Part::to_string() + "Energy contained: " + Str_conversion::to_string(get_energy_contained()) + "\n";
 	return result;
 }

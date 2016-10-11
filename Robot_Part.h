@@ -1,13 +1,6 @@
 #ifndef STDLIBFAC
 #define STDLIBFAC 20
-#include<iostream>
-
-#include<string>
-#include<vector>
-#include<algorithm>
-#include<cmath>
-using namespace std;
-inline void keep_window_open() { char ch; cin >> ch; }
+#include "helper_functions.h"
 
 enum class Component_type { Head = 1, Locomotor, Torso, Battery, Arm };
 
@@ -30,7 +23,5 @@ public:
 	Component_type get_component_type();
 	string get_component_type_str();
 	virtual string to_string();
-	string to_string(int n);
-	string to_string(double d);
 };
 #endif

@@ -35,6 +35,7 @@ void Controller::make_rand_part()
 		break;
 	case 2:
 		l = new Locomotor("Random Locomotor", (rand() % 1000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random locomotor.", (rand() % 100), (rand() % 1000));
+		//cout << (*l).to_string();
 		rand_part = l;
 		break;
 	case 3:
