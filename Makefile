@@ -4,8 +4,13 @@ rebuild: clean main
 main: robot_part.o controller.o view.o head.o arm.o locomotor.o torso.o battery.o main.o helper_functions.o
 	g++ robot_part.o controller.o view.o head.o arm.o locomotor.o torso.o battery.o main.o helper_functions.o
 
+test: robot_part.o head.o arm.o locomotor.o torso.o battery.o helper_functions.o test.o
+	g++ robot_part.o head.o arm.o locomotor.o torso.o battery.o helper_functions.o test.o
+
 main.o: main.cpp controller.h
 	g++ -std=c++11 -c main.cpp
+test.o: test.cpp
+	g++ -std=c++11 -c test.cpp
 view.o: View.cpp Robot_Part.h View.h
 	g++ -std=c++11 -c View.cpp
 controller.o: Controller.cpp Controller.h Head.h Locomotor.h Torso.h Battery.h Arm.h View.h

@@ -5,7 +5,6 @@
 #include<algorithm>
 #include<cmath>
 using namespace std;
-inline void keep_window_open() { char ch; cin >> ch; }
 
 class Str_conversion
 {
