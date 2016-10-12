@@ -8,6 +8,8 @@ Torso::Torso(string n, int pn, double w, double c, string d, int bc) : Robot_Par
 		battery_compartments = bc;
 }
 
+Torso::Torso() : Robot_Part() {}
+
 int Torso::get_battery_compartments()
 {
 	return battery_compartments;

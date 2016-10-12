@@ -11,16 +11,16 @@ class Battery_Limit {};
 class Robot_Model
 {
 private:
-	Head *head;
-	Torso *torso;
-	Locomotor *locomotor;
+	Head head;
+	Torso torso;
+	Locomotor locomotor;
 	vector<Arm> arms;
 	vector<Battery> batteries;
 	string name;
 	int model_num;
 	double price;
 public:
-	Robot_Model(string n, int mn, double p, Head h, Torso t, Locomotor l, vector<Arm> a, vector<Battery> b);
+	Robot_Model(string n, int mn, double p, Head h, Torso t, Locomotor l, vector<Arm>* a, vector<Battery> b);
 	string get_name();
 	int get_model_num();
 	double get_price();

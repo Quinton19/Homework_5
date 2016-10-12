@@ -1,15 +1,11 @@
-#include "Robot_Part.h"
-#include "Arm.h"
-#include "Battery.h"
-#include "Head.h"
-#include "Torso.h"
-#include "Locomotor.h"
+#include "Robot_Model.h"
 
 int main()
 {
 	bool pass = true;
 	string fail_messages = "";
 
+	cout << "1\n";
 	//Testing Str_conversion
 	if (Str_conversion::to_string(913).compare("913") != 0)
 	{
@@ -22,6 +18,7 @@ int main()
 		fail_messages += ".to_string(double) in class Str_conversion failed\n";
 	}
 
+	cout << "2\n";
 	//Testing Robot_Part
 	Robot_Part rp("Test Robot Part", 123456789, 23.36664289109, 500.00, "This is simply a test to ensure that the program creates robot parts correctly.", Component_type::Locomotor);
 	if (rp.get_name().compare("Test Robot Part") != 0)
@@ -70,6 +67,7 @@ int main()
 		fail_messages += ".to_string() in class Robot_Part failed\n";
 	}
 
+	cout << "3\n";
 	//Testing Arm
 	Arm a("Test Arm", 999999, 11.1, 45.99, "This is simply a test to ensure that the program creates arms correctly.", 20);
 	if (a.get_power_consumed() != 20.0)
@@ -89,6 +87,7 @@ int main()
 		fail_messages += ".to_string() in class Arm failed\n";
 	}
 
+	cout << "4\n";
 	//Testing Battery
 	Battery b("Test Battery", -222, 50, 400, "This is simply a test to ensure that the program creates batteries correctly.", 0);
 	if (b.get_energy_contained() != 0.0)
@@ -108,6 +107,7 @@ int main()
 		fail_messages += ".to_string() in class Battery failed\n";
 	}
 
+	cout << "5\n";
 	//Testing Head
 	Head h("Test Head", 1, 5000000.000001, 999999.02, "This is simply a test to ensure that the program creates heads correctly.");
 	if (h.to_string().compare("Name: " + h.get_name() + "\n"
@@ -121,25 +121,52 @@ int main()
 		fail_messages += ".to_string() in class Head failed\n";
 	}
 
+	cout << "6\n";
 	//Testing Torso
-	Torso t("Test Torso", 00001101, 749673, 555, "This is simply a test to ensure that the program creates torsos correctly.", 100);
-	if (t.get_battery_compartments() != 100)
+	Torso* t;
+	try
+	{
+		t = new Torso("Test Torso", 00001101, 749673, 555, "This is simply a test to ensure that the program creates torsos correctly.", 3);
+	}
+	catch(Compartment_Limit& limit_c)
+	{
+		pass = false;
+		fail_messages += "exceeded Compartment_Limit in Torso constructor\n";
+	}
+	if (t->get_battery_compartments() != 3)
 	{
 		pass = false;
 		fail_messages += ".get_battery_compartments() in class Torso failed\n";
 	}
-	if (t.to_string().compare("Name: " + t.get_name() + "\n"
-							+ "Part Number: " + Str_conversion::to_string(t.get_part_num()) + "\n"
-							+ "Weight: " + Str_conversion::to_string(t.get_weight()) + "\n"
-							+ "Cost: $" + Str_conversion::to_string(t.get_cost()) + "\n"
-							+ "Description: " + t.get_description() + "\n"
-							+ "Part type: " + t.get_component_type_str() + "\n"
-							+ "Number of battery compartments: " + Str_conversion::to_string(t.get_battery_compartments()) + "\n") != 0)
+	if (t->to_string().compare("Name: " + t->get_name() + "\n"
+							+ "Part Number: " + Str_conversion::to_string(t->get_part_num()) + "\n"
+							+ "Weight: " + Str_conversion::to_string(t->get_weight()) + "\n"
+							+ "Cost: $" + Str_conversion::to_string(t->get_cost()) + "\n"
+							+ "Description: " + t->get_description() + "\n"
+							+ "Part type: " + t->get_component_type_str() + "\n"
+							+ "Number of battery compartments: " + Str_conversion::to_string(t->get_battery_compartments()) + "\n") != 0)
 	{
 		pass = false;
 		fail_messages += ".to_string() in class Torso failed\n";
 	}
+	try
+	{
+		Torso bad_t("Bad Test Torso", -666, 666.666, 666.67, "This is a test of a bad construction of a Torso object, as there are no battery compartments.", 0);
+		pass = false;
+		fail_messages += "failed to catch Compartment_Limit when there were no battery compartments in Torso constructor\n";
+	}
+	catch(Compartment_Limit& limit_c)
+	{ }
+	try
+	{
+		Torso bad_t("Bad Test Torso", -666, 666.666, 666.67, "This is a test of a bad construction of a Torso object, as there are too many battery compartments.", 100);
+		pass = false;
+		fail_messages += "failed to catch Compartment_Limit when there were too many battery compartments in Torso constructor\n";
+	}
+	catch(Compartment_Limit& limit_c)
+	{ }
 
+	cout << "7\n";
 	//Testing Locomotor
 	Locomotor l("Test Locomotor", 5639272, 0.9, 0.99, "This is simply a test to ensure that the program creates locomotors correctly.", 88, 1.21);
 	if (l.get_max_speed() != 88)
@@ -165,9 +192,82 @@ int main()
 		fail_messages += ".to_string() in class Locomotor failed\n";
 	}
 
+	cout << "8\n";
+	//Testing Robot_Model
+	Torso t2("Test Torso", 00001101, 749673, 555, "This is simply a test to ensure that the program creates torsos correctly.", 3);
+	Arm a2("2nd Test Arm", 1000, 1000, 1000, "This is the 2nd test arm. It is being created to test the Robot_Model class.", 1000);
+	Battery b2("2nd Test Battery", 1, 1, 1, "This is the 2nd test battery. It is being created to test the Robot_Model class.", 1);
+	vector<Arm> arms;
+	arms.push_back(a);
+	arms.push_back(a2);
+	vector<Battery> batteries;
+	batteries.push_back(b);
+	batteries.push_back(b2);
+	batteries.push_back(b); cout << "8.1\n";
+	Robot_Model *r;
+	try
+	{
+		cout << "8.1.1\n";
+		r = new Robot_Model("Test Robot Model 1", 1, 1000000, h, t2, l, &arms, batteries); cout << "8.2\n";
+	}
+	catch (Arm_Limit& limit_a)
+	{
+		pass = false;
+		fail_messages += "exceeded Arm_Limit in Robot_Model 1 constructor\n";
+	}
+	catch (Battery_Limit& limit_b)
+	{
+		pass = false;
+		fail_messages += "exceeded Battery_Limit in Robot_Model 1 constructor\n";
+	}
+	vector<Arm> bad_arms;
+	vector<Battery> bad_batteries;
+	try
+	{
+		Robot_Model r("Test Robot Model 2", 2, 0, h, t2, l, &bad_arms, batteries);
+		pass = false;
+		fail_messages += "failed to catch Arm_Limit exception when there was no arms\n";
+	}
+	catch (Arm_Limit& limit_a)
+	{ }
+	bad_arms.push_back(a);
+	bad_arms.push_back(a);
+	bad_arms.push_back(a);
+	try
+	{
+		Robot_Model r("Test Robot Model 2", 2, 0, h, t2, l, &bad_arms, batteries);
+		pass = false;
+		fail_messages += "failed to catch Arm_Limit exception when there was too many arms\n";
+	}
+	catch(Arm_Limit& limit_a)
+	{ }
+	try
+	{
+		Robot_Model r("Test Robot Model 2", 2, 0, h, t2, l, &arms, bad_batteries);
+		pass = false;
+		fail_messages += "failed to catch Batteries_Limit exception when there was no batteries\n";
+	}
+	catch(Battery_Limit& limit_b)
+	{ }
+	bad_batteries.push_back(b);
+	bad_batteries.push_back(b);
+	bad_batteries.push_back(b);
+	bad_batteries.push_back(b);
+	try
+	{
+		Robot_Model r("Test Robot Model 2", 2, 0, h, t2, l, &arms, batteries);
+		pass = false;
+		fail_messages += "failed to catch Batteries_Limit exception when there was too many batteries\n";
+	}
+	catch(Battery_Limit& limit_b)
+	{ }
+	
+	cout << "9\n";
+	//end of tests
 	if (!pass)
 	{
 		cerr << fail_messages;
+		cout << "fail\n";
 	}
 	else
 	{

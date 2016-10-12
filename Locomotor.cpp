@@ -6,6 +6,8 @@ Locomotor::Locomotor(string n, int pn, double w, double c, string d, int ms, dou
 	power_consumed = pc;
 }
 
+Locomotor::Locomotor() : Robot_Part() {}
+
 int Locomotor::get_max_speed()
 {
 	return max_speed;

@@ -1,21 +1,45 @@
 #include "Robot_Model.h"
 
-Robot_Model::Robot_Model(string n, int mn, double p, Head h, Torso t, Locomotor l, vector<Arm> a, vector<Battery> b)
+Robot_Model::Robot_Model(string n, int mn, double p, Head h, Torso t, Locomotor l, vector<Arm>* a, vector<Battery> b)
 {
+	//head = static_cast<Head*>(malloc(sizeof(h)));
+	//torso = static_cast<Torso*>(malloc(sizeof(t)));
+	//locomotor = static_cast<Locomotor*>(malloc(sizeof(l)));
+	//Torso test_t = t;
+	//Head test_h = h;
+	//cout << h.to_string();
+	//cout << h.to_string();
+	//cout << t.to_string();
+	//cout << l.to_string();
+	cout << "rm0\n";
 	name = n;
 	model_num = mn;
-	price = p;
-	*head = h;
-	*torso = t;
-	*locomotor = l;
-	if (a.size() > 2 || a.size() < 1)
+	price = p; cout << "rm1\n";
+	//cout << test_h.to_string();
+	head = h; cout << "rm2\n";
+	//cout << test_t.to_string();
+	torso = t; cout << "rm3\n";
+	locomotor = l; cout << "rm4\n";
+	if (a->size() > 2 || a->size() < 1)
+	{
+		cout << "rm5.1\n";
 		throw Arm_Limit{};
+	}
 	else
-		arms = a;
-	if (b.size() < 1 || b.size() > torso->get_battery_compartments())
+	{
+		cout << "rm5.2\n";
+		arms = *a;
+	}
+	if (b.size() < 1 || b.size() > torso.get_battery_compartments())
+	{
+		cout << "rm6.1\n";
 		throw Battery_Limit{};
+	}
 	else
+	{
+		cout << "rm6.2\n";
 		batteries = b;
+	}
 }
 
 string Robot_Model::get_name()
@@ -35,17 +59,17 @@ double Robot_Model::get_price()
 
 Head Robot_Model::get_head()
 {
-	return *head;
+	return head;
 }
 
 Torso Robot_Model::get_torso()
 {
-	return *torso;
+	return torso;
 }
 
 Locomotor Robot_Model::get_locomotor()
 {
-	return *locomotor;
+	return locomotor;
 }
 
 vector<Arm> Robot_Model::get_arms()
@@ -73,7 +97,7 @@ void Robot_Model::add_arm(Arm a)
 
 void Robot_Model::add_battery(Battery b)
 {
-	if (batteries.size() == torso->get_battery_compartments())
+	if (batteries.size() == torso.get_battery_compartments())
 		throw Battery_Limit{};
 	else
 		batteries.push_back(b);
@@ -85,22 +109,14 @@ string Robot_Model::to_string()
 	result = "Model name: " + get_name() + "\n"
 		+ "Model Number: " + Str_conversion::to_string(get_model_num()) + "\n"
 		+ "Price: " + Str_conversion::to_string(get_price()) + "\n"
-		+ "COMPONENT INFORMATION:\n\n";
-	result += "Head:\n" + head->to_string()
-		+ "\nTorso:\n" + torso->to_string()
-		+ "\nLocomotor:\n" + locomotor->to_string();
-	for (int i = 0; i < arms.size(); i++)
-		result += "\nArm " + Str_conversion::to_string(i + 1) + ":\n" + arms[i].to_string();
-	for (int i = 0; i < batteries.size(); i++)
-		result += "\nBattery " + Str_conversion::to_string(i + 1) + ":\n" + batteries[i].to_string();
-	result += "\nTotal cost of components: " + Str_conversion::to_string(get_component_cost()) + "\n";
+	    + "Total cost of components: " + Str_conversion::to_string(get_component_cost()) + "\n";
 	return result;
 }
 
 double Robot_Model::get_component_cost()
 {
 	double total;
-	total = head->get_cost() + torso->get_cost() + locomotor->get_cost();
+	total = head.get_cost() + torso.get_cost() + locomotor.get_cost();
 	for (Arm a : arms)
 		total += a.get_cost();
 	for (Battery b : batteries)

@@ -15,6 +15,7 @@ private:
 	Component_type type;
 public:
 	Robot_Part(string n, int pn, double w, double c, string d, Component_type t);
+	Robot_Part();
 	string get_name();
 	int get_part_num();
 	double get_weight();

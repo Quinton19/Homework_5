@@ -11,6 +11,8 @@ Robot_Part::Robot_Part(string n, int pn, double w, double c, string d, Component
 	type = t;
 }
 
+Robot_Part::Robot_Part() {}
+
 string Robot_Part::get_name()
 {
 	return name;

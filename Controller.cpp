@@ -8,7 +8,7 @@
 
 Controller::Controller()
 {
-	srand(time(NULL));
+	//srand(time(NULL));
 	rand_num = (rand() % 6) + 1;
 }
 
