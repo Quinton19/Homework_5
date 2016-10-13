@@ -2,6 +2,8 @@
 
 class Part_Num_Exists {};
 class Model_Num_Exists {};
+class Part_Num_DNE {};
+class Invalid_Model {};
 
 class Shop
 {

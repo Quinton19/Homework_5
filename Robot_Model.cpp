@@ -2,42 +2,26 @@
 
 Robot_Model::Robot_Model(string n, int mn, double p, Head h, Torso t, Locomotor l, vector<Arm>* a, vector<Battery> b)
 {
-	//head = static_cast<Head*>(malloc(sizeof(h)));
-	//torso = static_cast<Torso*>(malloc(sizeof(t)));
-	//locomotor = static_cast<Locomotor*>(malloc(sizeof(l)));
-	//Torso test_t = t;
-	//Head test_h = h;
-	//cout << h.to_string();
-	//cout << h.to_string();
-	//cout << t.to_string();
-	//cout << l.to_string();
-	cout << "rm0\n";
 	name = n;
 	model_num = mn;
-	price = p; cout << "rm1\n";
-	//cout << test_h.to_string();
-	head = h; cout << "rm2\n";
-	//cout << test_t.to_string();
-	torso = t; cout << "rm3\n";
-	locomotor = l; cout << "rm4\n";
+	price = p;
+	head = h;
+	torso = t;
+	locomotor = l;
 	if (a->size() > 2 || a->size() < 1)
 	{
-		cout << "rm5.1\n";
 		throw Arm_Limit{};
 	}
 	else
 	{
-		cout << "rm5.2\n";
 		arms = *a;
 	}
 	if (b.size() < 1 || b.size() > torso.get_battery_compartments())
 	{
-		cout << "rm6.1\n";
 		throw Battery_Limit{};
 	}
 	else
 	{
-		cout << "rm6.2\n";
 		batteries = b;
 	}
 }
@@ -107,9 +91,7 @@ string Robot_Model::to_string()
 {
 	string result;
 	result = "Model name: " + get_name() + "\n"
-		+ "Model Number: " + Str_conversion::to_string(get_model_num()) + "\n"
-		+ "Price: " + Str_conversion::to_string(get_price()) + "\n"
-	    + "Total cost of components: " + Str_conversion::to_string(get_component_cost()) + "\n";
+		+ "Model Number: " + Str_conversion::to_string(get_model_num()) + "\n";
 	return result;
 }
 

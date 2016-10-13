@@ -65,13 +65,21 @@ void Shop::add(Robot_Model model)
 	}
 	models.push_back(model);
 
-	remove(model.get_head());
-	remove(model.get_torso());
-	remove(model.get_locomotor());
-	for(Arm arm : model.get_arms())
-		remove(arm);
-	for (Battery battery : model.get_batteries())
-		remove(battery);
+	try
+	{
+		remove(model.get_head());
+		remove(model.get_torso());
+		remove(model.get_locomotor());
+		for (Arm arm : model.get_arms())
+			remove(arm);
+		for (Battery battery : model.get_batteries())
+			remove(battery);
+	}
+	catch (Part_Num_DNE& e)
+	{
+		models.pop_back();
+		throw Invalid_Model{};
+	}
 }
 
 vector<Robot_Model> Shop::get_models()
@@ -139,55 +147,85 @@ vector<Battery> Shop::get_available_batteries()
 
 void Shop::remove(Head h)
 {
+	bool found = false;
 	vector<Head> new_heads;
 	for (Head head : heads)
 	{
 		if (head.get_part_num() != h.get_part_num())
 			new_heads.push_back(head);
+		else
+			found = true;
 	}
-	heads = new_heads;
+	if (!found)
+		throw Part_Num_DNE{};
+	else
+		heads = new_heads;
 }
 
 void Shop::remove(Torso t)
 {
+	bool found = false;
 	vector<Torso> new_torsos;
 	for (Torso torso : torsos)
 	{
 		if (torso.get_part_num() != t.get_part_num())
 			new_torsos.push_back(torso);
+		else
+			found = true;
 	}
-	torsos = new_torsos;
+	if (!found)
+		throw Part_Num_DNE{};
+	else
+		torsos = new_torsos;
 }
 
 void Shop::remove(Locomotor l)
 {
+	bool found = false;
 	vector<Locomotor> new_locomotors;
 	for (Locomotor locomotor : locomotors)
 	{
 		if (locomotor.get_part_num() != l.get_part_num())
 			new_locomotors.push_back(locomotor);
+		else
+			found = true;
 	}
-	locomotors = new_locomotors;
+	if (!found)
+		throw Part_Num_DNE{};
+	else
+		locomotors = new_locomotors;
 }
 
 void Shop::remove(Arm a)
 {
+	bool found = false;
 	vector<Arm> new_arms;
 	for (Arm arm : arms)
 	{
 		if (arm.get_part_num() != a.get_part_num())
 			new_arms.push_back(arm);
+		else
+			found = true;
 	}
-	arms = new_arms;
+	if (!found)
+		throw Part_Num_DNE{};
+	else
+		arms = new_arms;
 }
 
 void Shop::remove(Battery b)
 {
+	bool found = false;
 	vector<Battery> new_batteries;
 	for (Battery battery : batteries)
 	{
 		if (battery.get_part_num() != b.get_part_num())
 			new_batteries.push_back(battery);
+		else
+			found = true;
 	}
-	batteries = new_batteries;
+	if (!found)
+		throw Part_Num_DNE{};
+	else
+		batteries = new_batteries;
 }
