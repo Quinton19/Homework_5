@@ -13,5 +13,6 @@ public:
 	void display_locomotors_list();
 	void display_arms_list();
 	void display_batteries_list();
+	void display_robot_models();
 	void help();
 };

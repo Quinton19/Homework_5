@@ -64,7 +64,6 @@ string Robot_Part::to_string()
 		+ "Part Number: " + Str_conversion::to_string(part_num) + "\n"
 		+ "Weight: " + Str_conversion::to_string(get_weight()) + "\n"
 		+ "Cost: $" + Str_conversion::to_string(get_cost()) + "\n"
-		+ "Description: " + get_description() + "\n"
-		+ "Part type: " + get_component_type_str() + "\n";
+		+ "Description: " + get_description() + "\n";
 	return result;
 }

@@ -38,6 +38,9 @@ void Controller::execute_cmd(int cmd)
 			cout << "Goodbye.\n";
 			break;
 		case 913: //for testing purposes only
+			for (int i = 0; i < 40; i++)
+				shop.create_rand_part();
+			cout << "TESTING: Random parts created.\n\n";
 			break;
 		default:
 			cerr << "Invalid command. Please try again. (Type 9 for help)\n\n";
@@ -100,15 +103,52 @@ void Controller::add_new_part()
 
 		cout << "Enter in the name of the part: ";
 		getline(cin, name);
-		cout << "Enter in the part number: ";
-		cin >> part_num;
-		cin.ignore();
-		cout << "Enter in the part's weight (in pounds [lb]): ";
-		cin >> weight;
-		cin.ignore();
-		cout << "Enter in the part's cost (in US dollars): $";
-		cin >> cost;
-		cin.ignore();
+
+		while(true)
+		{
+			cout << "Enter in the part number: ";
+			cin >> part_num;
+			cin.ignore();
+			if (!cin)
+			{
+				cerr << "Invalid entry. Please try again.\n\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+			else
+				break;
+		}
+
+		while (true)
+		{
+			cout << "Enter in the part's weight (in pounds [lb]): ";
+			cin >> weight;
+			cin.ignore();
+			if (!cin)
+			{
+				cerr << "Invalid entry. Please try again.\n\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+			else
+				break;
+		}
+
+		while (true)
+		{
+			cout << "Enter in the part's cost (in US dollars): $";
+			cin >> cost;
+			cin.ignore();
+			if (!cin)
+			{
+				cerr << "Invalid entry. Please try again.\n\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+			else
+				break;
+		}
+
 		cout << "Enter in a brief description of the part:\n";
 		getline(cin, description);
 		cout << "\n";
@@ -122,31 +162,86 @@ void Controller::add_new_part()
 					cin >> batt_compartments;
 					cin.ignore();
 					cout << "\n";
-
-					if (batt_compartments < 1 || batt_compartments > 3)
+					
+					if (!cin)
+					{
+						cerr << "Invalid entry. Please try again.\n\n";
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+						batt_compartments = -1;
+					}
+					else if (batt_compartments < 1 || batt_compartments > 3)
 						cerr << "Invalid number. Please try again.\n\n";
 				} while (batt_compartments < 1 || batt_compartments > 3);
 				break;
 			case Component_type::Locomotor:
-				cout << "Enter in the locomotor's maximum speed (in miles per hour [mph]): ";
-				cin >> speed;
-				cin.ignore();
+				while (true)
+				{
+					cout << "Enter in the locomotor's maximum speed (in miles per hour [mph]): ";
+					cin >> speed;
+					cin.ignore();
 
-				cout << "Enter in the power consumed when the locomotor is in operation (in watts [W]): ";
-				cin >> pwr_consumed;
-				cin.ignore();
+					if (!cin)
+					{
+						cerr << "Invalid entry. Please try again.\n\n";
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
+					else
+						break;
+				}
+
+				while (true)
+				{
+					cout << "Enter in the power consumed when the locomotor is in operation (in watts [W]): ";
+					cin >> pwr_consumed;
+					cin.ignore();
+
+					if (!cin)
+					{
+						cerr << "Invalid entry. Please try again.\n\n";
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
+					else
+						break;
+				}
 				cout << "\n";
 				break;
 			case Component_type::Arm:
-				cout << "Enter in the power consumed when the arm is in operation (in watts [W]): ";
-				cin >> pwr_consumed;
-				cin.ignore();
+				while (true)
+				{
+					cout << "Enter in the power consumed when the arm is in operation (in watts [W]): ";
+					cin >> pwr_consumed;
+					cin.ignore();
+
+					if (!cin)
+					{
+						cerr << "Invalid entry. Please try again.\n\n";
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
+					else
+						break;
+				}
 				cout << "\n";
 				break;
 			case Component_type::Battery:
-				cout << "Enter in the amount of energy contained within the battery (in kilowatt-hours [kWh]): ";
-				cin >> energy;
-				cin.ignore();
+				while (true)
+				{
+					cout << "Enter in the amount of energy contained within the battery (in kilowatt-hours [kWh]): ";
+					cin >> energy;
+					cin.ignore();
+
+					if (!cin)
+					{
+						cerr << "Invalid entry. Please try again.\n\n";
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
+					else
+						break;
+				}
 				cout << "\n";
 				break;
 		}
@@ -303,19 +398,46 @@ void Controller::add_new_model()
 	vector<Arm> arms;
 	vector<Battery> batteries;
 
+	if (shop.get_available_heads().size() == 0 || shop.get_available_torsos().size() == 0 || shop.get_available_locomotors().size() == 0
+		|| shop.get_available_arms().size() == 0 || shop.get_available_batteries().size() == 0)
+	{
+		cerr << "ERROR: Not enough parts registered to create a model. Please add more parts and try again.\n\n";
+		return;
+	}
+
 	cout << "Enter in the robot model's name: ";
 	getline(cin, name);
 
-	cout << "Enter in the model number: ";
-	cin >> model_num;
-	cin.ignore();
+	while (true)
+	{
+		cout << "Enter in the model number: ";
+		cin >> model_num;
+		cin.ignore();
+
+		if (!cin)
+		{
+			cerr << "Invalid entry. Please try again.\n\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+		else
+			break;
+	}
 
 	do
 	{
 		view.display_heads_list();
 		cout << "Select the head part to be used in this model: ";
 		cin >> choice;
-		if (choice < 1 || choice > shop.get_available_heads().size())
+
+		if (!cin)
+		{
+			cerr << "Invalid entry. Please try again.\n\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			choice = -1;
+		}
+		else if (choice < 1 || choice > shop.get_available_heads().size())
 			cerr << "Invalid choice. Please try again.\n\n";
 		else
 		{
@@ -329,7 +451,15 @@ void Controller::add_new_model()
 		view.display_torsos_list();
 		cout << "Select the torso part to be used in this model: ";
 		cin >> choice;
-		if (choice < 1 || choice > shop.get_available_torsos().size())
+
+		if (!cin)
+		{
+			cerr << "Invalid entry. Please try again.\n\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			choice = -1;
+		}
+		else if (choice < 1 || choice > shop.get_available_torsos().size())
 			cerr << "Invalid choice. Please try again.\n\n";
 		else
 		{
@@ -343,7 +473,15 @@ void Controller::add_new_model()
 		view.display_locomotors_list();
 		cout << "Select the locomotor part to be used in this model: ";
 		cin >> choice;
-		if (choice < 1 || choice > shop.get_available_locomotors().size())
+
+		if (!cin)
+		{
+			cerr << "Invalid entry. Please try again.\n\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			choice = -1;
+		}
+		else if (choice < 1 || choice > shop.get_available_locomotors().size())
 			cerr << "Invalid choice. Please try again.\n\n";
 		else
 		{
@@ -359,21 +497,32 @@ void Controller::add_new_model()
 			view.display_arms_list();
 			cout << "Select an arm part to be used in this model: ";
 			cin >> choice;
-			if (choice < 1 || choice > shop.get_available_arms().size())
+
+			if (!cin)
+			{
+				cerr << "Invalid entry. Please try again.\n\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				choice = -1;
+			}
+			else if (choice < 1 || choice > shop.get_available_arms().size())
 				cerr << "Invalid choice. Please try again.\n\n";
 			else
 			{
 				vector<Arm> shop_arms = shop.get_available_arms();
 				arms.push_back(shop_arms[choice - 1]);
 			}
-		} while (choice < 1 || choice > shop.get_available_heads().size());
+		} while (choice < 1 || choice > shop.get_available_arms().size());
 
-		cout << "Would you like to add another arm? [y/n] ";
-		cin >> another_part;
-		cin.ignore();
+		if ((i + 1) != 2)
+		{
+			cout << "Would you like to add another arm? [y/n] ";
+			cin >> another_part;
+			cin.ignore();
 
-		if (another_part != 'y')
-			break;
+			if (another_part != 'y')
+				break;
+		}
 	}
 
 	for (int i = 0; i < torso.get_battery_compartments(); i++)
@@ -383,14 +532,22 @@ void Controller::add_new_model()
 			view.display_batteries_list();
 			cout << "Select a battery part to be used in this model: ";
 			cin >> choice;
-			if (choice < 1 || choice > shop.get_available_heads().size())
+
+			if (!cin)
+			{
+				cerr << "Invalid entry. Please try again.\n\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				choice = -1;
+			}
+			else if (choice < 1 || choice > shop.get_available_batteries().size())
 				cerr << "Invalid choice. Please try again.\n\n";
 			else
 			{
 				vector<Battery> shop_batteries = shop.get_available_batteries();
 				batteries.push_back(shop_batteries[choice - 1]);
 			}
-		} while (choice < 1 || choice > shop.get_available_heads().size());
+		} while (choice < 1 || choice > shop.get_available_batteries().size());
 
 		if ((i + 1) == torso.get_battery_compartments())
 			break;
@@ -411,10 +568,22 @@ void Controller::add_new_model()
 	for (Battery b : batteries)
 		total_cost += b.get_cost();
 
-	cout << "The total cost of all the selected components is $" << total_cost << ".\n"
-		<< "Enter in the price of the model: $";
-	cin >> price;
-	cin.ignore();
+	while (true)
+	{
+		cout << "The total cost of all the selected components is $" << total_cost << ".\n"
+			<< "Enter in the price of the model: $";
+		cin >> price;
+		cin.ignore();
+
+		if (!cin)
+		{
+			cerr << "Invalid entry. Please try again.\n\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+		else
+			break;
+	}
 
 	Robot_Model model(name, model_num, price, head, torso, locomotor, &arms, batteries);
 	
@@ -451,10 +620,119 @@ void Controller::add_new_model()
 
 void Controller::list_all_models()
 {
+	int choice;
+	while(true)
+	{
+		if (shop.get_models().size() == 0)
+		{
+			cout << "There are no models to display.\n\n";
+			break;
+		}
 
+		view.display_robot_models();
+		cout << "Please select a model for more information (or select '0' to exit): ";
+		cin >> choice;
+		cin.ignore();
+		cout << "\n";
+
+		if (!cin)
+		{
+			cerr << "Invalid entry. Please try again.\n\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			choice = -1;
+		}
+		else if(choice == 0)
+		{
+			break;
+		}
+		else
+		{
+			vector<Robot_Model> shop_models = shop.get_models();
+
+			if (choice > shop_models.size())
+			{
+				cerr << "Invalid entry. Please try again.\n\n";
+			}
+			else
+			{
+				cout << "Head Info:\n"
+					<< shop_models[choice - 1].get_head().to_string()
+					<< "\nTorso Info:\n"
+					<< shop_models[choice - 1].get_torso().to_string()
+					<< "\nLocomotor Info:\n"
+					<< shop_models[choice - 1].get_locomotor().to_string();
+				for (int i = 0; i < shop_models[choice - 1].get_arms().size(); i++)
+				{
+					cout << "\nArm " << i + 1 << " Info:\n"
+						<< shop_models[choice - 1].get_arms()[i].to_string();
+				}
+				for (int i = 0; i < shop_models[choice - 1].get_batteries().size(); i++)
+				{
+					cout << "\nBattery " << i + 1 << " Info:\n"
+						<< shop_models[choice - 1].get_batteries()[i].to_string();
+				}
+				cout << "\nPress ENTER when you are done with this information.";
+				while (true)
+				{
+					if (cin.get() == '\n')
+						break;
+				}
+			}
+		}
+	}
 }
 
 void Controller::order_robot_models()
 {
+	int choice, quantity;
+	char correct;
+	do
+	{
+		while (true)
+		{
+			view.display_robot_models();
+			cout << "Please select a model to order: ";
+			cin >> choice;
+			cin.ignore();
 
+			if (!cin)
+			{
+				cerr << "Invalid entry. Please try again.\n\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				choice = -1;
+			}
+			else if (choice > shop.get_models().size())
+			{
+				cerr << "Invalid entry. Please try again.\n\n";
+			}
+			else
+				break;
+		}
+
+		while (true)
+		{
+			cout << "How many of the " << shop.get_models()[choice - 1].get_name() << " robot models would you like to order? ";
+			cin >> quantity;
+			cin.ignore();
+
+			if (!cin)
+			{
+				cerr << "Invalid entry. Please try again.\n\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+			else
+				break;
+		}
+
+		cout << shop.get_models()[choice - 1].to_string()
+			<< "Quantity: " << quantity << "\n"
+			<< "Total Price: $" << shop.get_models()[choice - 1].get_price() * quantity << "\n";
+		cout << "Is this correct? [y/n] ";
+		cin >> correct;
+	} while (correct != 'y');
+
+	cout << "\nCongratulations on your order!\n\n";
 }
