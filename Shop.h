@@ -2,8 +2,10 @@
 
 class Part_Num_Exists {};
 class Model_Num_Exists {};
+/*
 class Part_Num_DNE {};
 class Invalid_Model {};
+*/
 
 class Shop
 {
@@ -29,9 +31,11 @@ public:
 	vector<Locomotor> get_available_locomotors();
 	vector<Arm> get_available_arms();
 	vector<Battery> get_available_batteries();
+	/*
 	void remove(Head h);
 	void remove(Torso t);
 	void remove(Locomotor l);
 	void remove(Arm a);
 	void remove(Battery b);
+	*/
 };

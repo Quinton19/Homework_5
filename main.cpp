@@ -2,7 +2,8 @@
 
 int main()
 {
-	Controller c;
-	c.cli();
+	Shop shop;
+	Controller controller(shop);
+	controller.cli();
 	return 1;
 }

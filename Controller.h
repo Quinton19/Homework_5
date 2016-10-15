@@ -3,11 +3,14 @@
 class Controller
 {
 private:
-	int rand_num;
-	Robot_Part* rand_part;
 	View view;
+	Shop& shop;
 public:
-	Controller();
+	Controller(Shop& s) : shop(s), view(View(s)) { }
 	void cli();
-	void make_rand_part();
+	void execute_cmd(int cmd);
+	void add_new_part();
+	void add_new_model();
+	void list_all_models();
+	void order_robot_models();
 };

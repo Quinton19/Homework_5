@@ -64,7 +64,7 @@ void Shop::add(Robot_Model model)
 			throw Model_Num_Exists{};
 	}
 	models.push_back(model);
-
+	/*
 	try
 	{
 		remove(model.get_head());
@@ -80,6 +80,7 @@ void Shop::add(Robot_Model model)
 		models.pop_back();
 		throw Invalid_Model{};
 	}
+	*/
 }
 
 vector<Robot_Model> Shop::get_models()
@@ -144,7 +145,7 @@ vector<Battery> Shop::get_available_batteries()
 {
 	return batteries;
 }
-
+/*
 void Shop::remove(Head h)
 {
 	bool found = false;
@@ -229,3 +230,4 @@ void Shop::remove(Battery b)
 	else
 		batteries = new_batteries;
 }
+*/
