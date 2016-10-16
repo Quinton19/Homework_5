@@ -19,6 +19,18 @@ void Controller::cli()
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			cmd = -1;
 		}
+		else if (cmd == 0)
+		{
+			char check;
+			cout << "Are you sure you want to quit? All your data will be lost. [y/n] ";
+			cin >> check;
+			cout << "\n";
+
+			if (check == 'y')
+				execute_cmd(cmd);
+			else
+				cmd = -1;
+		}
 		else
 			execute_cmd(cmd);
 	} while (cmd != 0);
@@ -146,7 +158,7 @@ void Controller::add_new_part()
 			cin.ignore();
 			if (!cin)
 			{
-				cerr << "Invalid entry. Please try again.\n\n";
+				cerr << "\nInvalid entry. Please try again.\n\n";
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
@@ -161,7 +173,7 @@ void Controller::add_new_part()
 			cin.ignore();
 			if (!cin)
 			{
-				cerr << "Invalid entry. Please try again.\n\n";
+				cerr << "\nInvalid entry. Please try again.\n\n";
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
@@ -176,7 +188,7 @@ void Controller::add_new_part()
 			cin.ignore();
 			if (!cin)
 			{
-				cerr << "Invalid entry. Please try again.\n\n";
+				cerr << "\nInvalid entry. Please try again.\n\n";
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
@@ -200,7 +212,7 @@ void Controller::add_new_part()
 					
 					if (!cin)
 					{
-						cerr << "Invalid entry. Please try again.\n\n";
+						cerr << "\nInvalid entry. Please try again.\n\n";
 						cin.clear();
 						cin.ignore(numeric_limits<streamsize>::max(), '\n');
 						batt_compartments = -1;
@@ -218,7 +230,7 @@ void Controller::add_new_part()
 
 					if (!cin)
 					{
-						cerr << "Invalid entry. Please try again.\n\n";
+						cerr << "\nInvalid entry. Please try again.\n\n";
 						cin.clear();
 						cin.ignore(numeric_limits<streamsize>::max(), '\n');
 					}
@@ -234,7 +246,7 @@ void Controller::add_new_part()
 
 					if (!cin)
 					{
-						cerr << "Invalid entry. Please try again.\n\n";
+						cerr << "\nInvalid entry. Please try again.\n\n";
 						cin.clear();
 						cin.ignore(numeric_limits<streamsize>::max(), '\n');
 					}
@@ -252,7 +264,7 @@ void Controller::add_new_part()
 
 					if (!cin)
 					{
-						cerr << "Invalid entry. Please try again.\n\n";
+						cerr << "\nInvalid entry. Please try again.\n\n";
 						cin.clear();
 						cin.ignore(numeric_limits<streamsize>::max(), '\n');
 					}
@@ -270,7 +282,7 @@ void Controller::add_new_part()
 
 					if (!cin)
 					{
-						cerr << "Invalid entry. Please try again.\n\n";
+						cerr << "\nInvalid entry. Please try again.\n\n";
 						cin.clear();
 						cin.ignore(numeric_limits<streamsize>::max(), '\n');
 					}
@@ -304,7 +316,7 @@ void Controller::add_new_part()
 					try 
 					{
 						shop.add(*h);
-						cout << "\nHead successfully added.\n";
+						cout << "Head successfully added.\n\n";
 						return;
 					}
 					catch (Part_Num_Exists& e)
@@ -336,7 +348,7 @@ void Controller::add_new_part()
 					try
 					{
 						shop.add(*t);
-						cout << "\nTorso successfully added.\n";
+						cout << "Torso successfully added.\n\n";
 						return;
 					}
 					catch (Part_Num_Exists& e)
@@ -360,7 +372,7 @@ void Controller::add_new_part()
 					try
 					{
 						shop.add(*l);
-						cout << "\nLocomotor successfully added.\n";
+						cout << "Locomotor successfully added.\n\n";
 						return;
 					}
 					catch (Part_Num_Exists& e)
@@ -384,7 +396,7 @@ void Controller::add_new_part()
 					try
 					{
 						shop.add(*a);
-						cout << "\nArm successfully added.\n";
+						cout << "Arm successfully added.\n\n";
 						return;
 					}
 					catch (Part_Num_Exists& e)
@@ -408,7 +420,7 @@ void Controller::add_new_part()
 					try
 					{
 						shop.add(*b);
-						cout << "\nBattery successfully added.\n";
+						cout << "Battery successfully added.\n\n";
 						return;
 					}
 					catch (Part_Num_Exists& e)
@@ -772,7 +784,7 @@ void Controller::order_robot_models()
 		cout << shop.get_models()[choice - 1].to_string()
 			<< "Quantity: " << quantity << "\n"
 			<< "Total Price: $" << shop.get_models()[choice - 1].get_price() * quantity << "\n";
-		cout << "Is this correct? [y/n] ";
+		cout << "Would you like to place this order? [y/n] ";
 		cin >> correct;
 	} while (correct != 'y');
 

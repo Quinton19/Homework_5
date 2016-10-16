@@ -12,8 +12,8 @@ void View::display_menu()
 		<< "=================================================\n"
 		<< "1) Add new robot part\n"
 		<< "2) Add new robot model\n"
-		<< "3) List all robot models\n"
-		<< "4) Order robot model\n"
+		<< "3) Browse robot model catalog\n"
+		<< "4) Order robot models\n"
 		<< "9) Get help on how to use the system\n"
 		<< "0) Exit\n";
 }
@@ -74,6 +74,6 @@ void View::display_robot_models()
 
 void View::help()
 {
-	cout << "Type a number into the computer to select the corresponding option on the menu.\n"
-		<< "See the user manual for more information on how the system works.\n\n";
+	cout << "Type a number into the computer and press ENTER to select the corresponding option on the menu.\n"
+		<< "See the Robbie Robot Shop user manual for more information on how the system works.\n\n";
 }
