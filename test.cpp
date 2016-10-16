@@ -67,10 +67,9 @@ int main()
 
 	if (rp.to_string().compare("Name: " + rp.get_name() + "\n"
 							+ "Part Number: " + Str_conversion::to_string(rp.get_part_num()) + "\n"
-							+ "Weight: " + Str_conversion::to_string(rp.get_weight()) + "\n"
+							+ "Weight: " + Str_conversion::to_string(rp.get_weight()) + " lb\n"
 							+ "Cost: $" + Str_conversion::to_string(rp.get_cost()) + "\n"
-							+ "Description: " + rp.get_description() + "\n"
-							+ "Part type: " + rp.get_component_type_str() + "\n") != 0)
+							+ "Description: " + rp.get_description() + "\n") != 0)
 	{
 		pass = false;
 		fail_messages += ".to_string() in class Robot_Part failed\n";
@@ -88,11 +87,10 @@ int main()
 
 	if (a.to_string().compare("Name: " + a.get_name() + "\n"
 							+ "Part Number: " + Str_conversion::to_string(a.get_part_num()) + "\n"
-							+ "Weight: " + Str_conversion::to_string(a.get_weight()) + "\n"
+							+ "Weight: " + Str_conversion::to_string(a.get_weight()) + " lb\n"
 							+ "Cost: $" + Str_conversion::to_string(a.get_cost()) + "\n"
 							+ "Description: " + a.get_description() + "\n"
-							+ "Part type: " + a.get_component_type_str() + "\n"
-							+ "Power consumed: " + Str_conversion::to_string(a.get_power_consumed()) + "\n") != 0)
+							+ "Power consumed: " + Str_conversion::to_string(a.get_power_consumed()) + " W\n") != 0)
 	{
 		pass = false;
 		fail_messages += ".to_string() in class Arm failed\n";
@@ -110,11 +108,10 @@ int main()
 
 	if (b.to_string().compare("Name: " + b.get_name() + "\n"
 							+ "Part Number: " + Str_conversion::to_string(b.get_part_num()) + "\n"
-							+ "Weight: " + Str_conversion::to_string(b.get_weight()) + "\n"
+							+ "Weight: " + Str_conversion::to_string(b.get_weight()) + " lb\n"
 							+ "Cost: $" + Str_conversion::to_string(b.get_cost()) + "\n"
 							+ "Description: " + b.get_description() + "\n"
-							+ "Part type: " + b.get_component_type_str() + "\n"
-							+ "Energy contained: " + Str_conversion::to_string(b.get_energy_contained()) + "\n") != 0)
+							+ "Energy contained: " + Str_conversion::to_string(b.get_energy_contained()) + " kWh\n") != 0)
 	{
 		pass = false;
 		fail_messages += ".to_string() in class Battery failed\n";
@@ -126,10 +123,9 @@ int main()
 	Head h("Test Head", 1, 5000000.000001, 999999.02, "This is simply a test to ensure that the program creates heads correctly.");
 	if (h.to_string().compare("Name: " + h.get_name() + "\n"
 							+ "Part Number: " + Str_conversion::to_string(h.get_part_num()) + "\n"
-							+ "Weight: " + Str_conversion::to_string(h.get_weight()) + "\n"
+							+ "Weight: " + Str_conversion::to_string(h.get_weight()) + " lb\n"
 							+ "Cost: $" + Str_conversion::to_string(h.get_cost()) + "\n"
-							+ "Description: " + h.get_description() + "\n"
-							+ "Part type: " + h.get_component_type_str() + "\n") != 0)
+							+ "Description: " + h.get_description() + "\n") != 0)
 	{
 		pass = false;
 		fail_messages += ".to_string() in class Head failed\n";
@@ -157,10 +153,9 @@ int main()
 
 	if (t->to_string().compare("Name: " + t->get_name() + "\n"
 							+ "Part Number: " + Str_conversion::to_string(t->get_part_num()) + "\n"
-							+ "Weight: " + Str_conversion::to_string(t->get_weight()) + "\n"
+							+ "Weight: " + Str_conversion::to_string(t->get_weight()) + " lb\n"
 							+ "Cost: $" + Str_conversion::to_string(t->get_cost()) + "\n"
 							+ "Description: " + t->get_description() + "\n"
-							+ "Part type: " + t->get_component_type_str() + "\n"
 							+ "Number of battery compartments: " + Str_conversion::to_string(t->get_battery_compartments()) + "\n") != 0)
 	{
 		pass = false;
@@ -203,12 +198,11 @@ int main()
 
 	if (l.to_string().compare("Name: " + l.get_name() + "\n"
 							+ "Part Number: " + Str_conversion::to_string(l.get_part_num()) + "\n"
-							+ "Weight: " + Str_conversion::to_string(l.get_weight()) + "\n"
+							+ "Weight: " + Str_conversion::to_string(l.get_weight()) + " lb\n"
 							+ "Cost: $" + Str_conversion::to_string(l.get_cost()) + "\n"
 							+ "Description: " + l.get_description() + "\n"
-							+ "Part type: " + l.get_component_type_str() + "\n"
-							+ "Max speed: " + Str_conversion::to_string(l.get_max_speed()) + "\n"
-							+ "Power consumed: " + Str_conversion::to_string(l.get_power_consumed()) + "\n") != 0)
+							+ "Max speed: " + Str_conversion::to_string(l.get_max_speed()) + " mph\n"
+							+ "Power consumed: " + Str_conversion::to_string(l.get_power_consumed()) + " W\n") != 0)
 	{
 		pass = false;
 		fail_messages += ".to_string() in class Locomotor failed\n";
@@ -498,6 +492,13 @@ int main()
 		fail_messages += ".create_rand_part() failed, as it created more than 1 part\n";
 	}
 	
+	s.create_rand_model();
+	vector<Robot_Model> models = s.get_models();
+	if (models.size() != 2)
+	{
+		pass = false;
+		fail_messages += ".create_rand_model() failed\n";
+	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//end of tests
