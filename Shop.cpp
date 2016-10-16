@@ -1,6 +1,13 @@
 #include "Shop.h"
 #include <time.h>
 
+int Shop::num_rand_models = 0;
+int Shop::num_rand_heads = 0;
+int Shop::num_rand_torsos = 0;
+int Shop::num_rand_locomotors = 0;
+int Shop::num_rand_arms = 0;
+int Shop::num_rand_batteries = 0;
+
 Shop::Shop()
 {
 	srand(time(NULL));
@@ -96,28 +103,125 @@ void Shop::create_rand_part() //for testing purposes only
 	Battery *b;
 	Arm *a;
 	int rand_num = (rand() % 5) + 1;
+
 	switch (rand_num)
 	{
 	case 1:
-		h = new Head("Random Head", (rand() % 10000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random head.");
-		heads.push_back(*h);
+		num_rand_heads++;
+		h = new Head("Random Head " + Str_conversion::to_string(num_rand_heads), (rand() % 10000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random head.");
+		try
+		{
+			add(*h);
+		}
+		catch (Part_Num_Exists& e)
+		{
+			num_rand_heads--;
+			throw Part_Num_Exists{};
+		}
 		break;
 	case 2:
-		l = new Locomotor("Random Locomotor", (rand() % 10000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random locomotor.", (rand() % 100), (rand() % 100000)/100.0);
-		locomotors.push_back(*l);
+		num_rand_locomotors++;
+		l = new Locomotor("Random Locomotor " + Str_conversion::to_string(num_rand_locomotors), (rand() % 10000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random locomotor.", (rand() % 100), (rand() % 100000)/100.0);
+		try
+		{
+			add(*l);
+		}
+		catch (Part_Num_Exists& e)
+		{
+			num_rand_locomotors--;
+			throw Part_Num_Exists{};
+		}
 		break;
 	case 3:
-		t = new Torso("Random Torso", (rand() % 10000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random torso.", (rand() % 3) + 1);
-		torsos.push_back(*t);
+		num_rand_torsos++;
+		t = new Torso("Random Torso " + Str_conversion::to_string(num_rand_torsos), (rand() % 10000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random torso.", (rand() % 3) + 1);
+		try
+		{
+			add(*t);
+		}
+		catch (Part_Num_Exists& e)
+		{
+			num_rand_torsos--;
+			throw Part_Num_Exists{};
+		}
 		break;
 	case 4:
-		b = new Battery("Random Battery", (rand() % 10000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random battery.", ((rand() % 100000000) / 100.0));
-		batteries.push_back(*b);
+		num_rand_batteries++;
+		b = new Battery("Random Battery" + Str_conversion::to_string(num_rand_batteries), (rand() % 10000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random battery.", ((rand() % 100000000) / 100.0));
+		try
+		{
+			add(*b);
+		}
+		catch (Part_Num_Exists& e)
+		{
+			num_rand_batteries--;
+			throw Part_Num_Exists{};
+		}
 		break;
 	case 5:
-		a = new Arm("Random Arm", (rand() % 10000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random arm.", (rand() % 100000)/100.0);
-		arms.push_back(*a);
+		num_rand_arms++;
+		a = new Arm("Random Arm " + Str_conversion::to_string(num_rand_arms), (rand() % 10000000), ((rand() % 100000) / 100.0), ((rand() % 1000000) / 100.0), "This is a random description of a random arm.", (rand() % 100000)/100.0);
+		try
+		{
+			add(*a);
+		}
+		catch (Part_Num_Exists& e)
+		{
+			num_rand_arms--;
+			throw Part_Num_Exists{};
+		}
 		break;
+	}
+}
+
+void Shop::create_rand_model() //for testing purposes only
+{
+	if (get_available_heads().size() == 0 || get_available_torsos().size() == 0 || get_available_locomotors().size() == 0
+		|| get_available_arms().size() == 0 || get_available_batteries().size() == 0)
+	{
+		throw Missing_Parts{};
+	}
+
+	int num_arms = (rand() % 2) + 1;
+	if (get_available_arms().size() < num_arms)
+		throw Missing_Parts{};
+
+	int rand_index;
+
+	rand_index = rand() % get_available_heads().size();
+	Head head = get_available_heads()[rand_index];
+
+	rand_index = rand() % get_available_torsos().size();
+	Torso torso = get_available_torsos()[rand_index];
+
+	rand_index = rand() % get_available_locomotors().size();
+	Locomotor locomotor = get_available_locomotors()[rand_index];
+
+	vector<Arm> arms;
+	for (int i = 0; i < num_arms; i++)
+	{
+		rand_index = rand() % get_available_arms().size();
+		arms.push_back(get_available_arms()[rand_index]);
+	}
+
+	vector<Battery> batteries;
+	int num_batteries = (rand() % torso.get_battery_compartments()) + 1;
+	for (int i = 0; i < num_batteries; i++)
+	{
+		rand_index = rand() % get_available_batteries().size();
+		batteries.push_back(get_available_batteries()[rand_index]);
+	}
+
+	num_rand_models++;
+	Robot_Model model("Random Robot Model " + Str_conversion::to_string(num_rand_models), (rand() % 10000000), ((rand() % 1000000) / 100.0), head, torso, locomotor, &arms, batteries);
+	try
+	{
+		add(model);
+	}
+	catch (Model_Num_Exists& e)
+	{
+		num_rand_models--;
+		throw Model_Num_Exists{};
 	}
 }
 

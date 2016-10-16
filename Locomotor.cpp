@@ -21,7 +21,7 @@ double Locomotor::get_power_consumed()
 string Locomotor::to_string()
 {
 	string result;
-	result = Robot_Part::to_string() + "Max speed: " + Str_conversion::to_string(get_max_speed()) + "\n"
-		+ "Power consumed: " + Str_conversion::to_string(get_power_consumed()) + "\n";
+	result = Robot_Part::to_string() + "Max speed: " + Str_conversion::to_string(get_max_speed()) + " mph\n"
+		+ "Power consumed: " + Str_conversion::to_string(get_power_consumed()) + " W\n";
 	return result;
 }

@@ -62,7 +62,7 @@ string Robot_Part::to_string()
 	string result;
 	result = "Name: " + get_name() + "\n"
 		+ "Part Number: " + Str_conversion::to_string(part_num) + "\n"
-		+ "Weight: " + Str_conversion::to_string(get_weight()) + "\n"
+		+ "Weight: " + Str_conversion::to_string(get_weight()) + " lb\n"
 		+ "Cost: $" + Str_conversion::to_string(get_cost()) + "\n"
 		+ "Description: " + get_description() + "\n";
 	return result;

@@ -91,7 +91,8 @@ string Robot_Model::to_string()
 {
 	string result;
 	result = "Model name: " + get_name() + "\n"
-		+ "Model Number: " + Str_conversion::to_string(get_model_num()) + "\n";
+		+ "Model Number: " + Str_conversion::to_string(get_model_num()) + "\n"
+		+ "Price: $" + Str_conversion::to_string(get_price()) + "\n";
 	return result;
 }
 

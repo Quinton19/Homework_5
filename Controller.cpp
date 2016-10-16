@@ -11,7 +11,16 @@ void Controller::cli()
 		cin >> cmd;
 		cin.ignore();
 		cout << "-------------------------------------------------\n\n";
-		execute_cmd(cmd);
+
+		if (!cin)
+		{
+			cerr << "Invalid entry. Please try again.\n\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cmd = -1;
+		}
+		else
+			execute_cmd(cmd);
 	} while (cmd != 0);
 }
 
@@ -37,10 +46,36 @@ void Controller::execute_cmd(int cmd)
 		case 0:
 			cout << "Goodbye.\n";
 			break;
-		case 913: //for testing purposes only
+		case 91396: //for testing purposes only
 			for (int i = 0; i < 40; i++)
-				shop.create_rand_part();
+			{
+				try
+				{
+					shop.create_rand_part();
+				}
+				catch (Part_Num_Exists& e)
+				{ }
+			}
 			cout << "TESTING: Random parts created.\n\n";
+			break;
+		case 32803:
+			try
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					try
+					{
+						shop.create_rand_model();
+					}
+					catch (Model_Num_Exists& e)
+					{ }
+				}
+				cout << "TESTING: Random models created.\n\n";
+			}
+			catch (Missing_Parts& e)
+			{
+				cerr << "ERROR: Not enough parts to create a model.\n\n";
+			}
 			break;
 		default:
 			cerr << "Invalid command. Please try again. (Type 9 for help)\n\n";
@@ -687,6 +722,13 @@ void Controller::order_robot_models()
 {
 	int choice, quantity;
 	char correct;
+
+	if (shop.get_models().size() == 0)
+	{
+		cerr << "ERROR: There are no robot models available to be ordered. Please add a model and try again.\n\n";
+		return;
+	}
+
 	do
 	{
 		while (true)

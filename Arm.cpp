@@ -13,6 +13,6 @@ double Arm::get_power_consumed()
 string Arm::to_string()
 {
 	string result;
-	result = Robot_Part::to_string() + "Power consumed: " + Str_conversion::to_string(get_power_consumed()) + "\n";
+	result = Robot_Part::to_string() + "Power consumed: " + Str_conversion::to_string(get_power_consumed()) + " W\n";
 	return result;
 }
