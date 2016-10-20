@@ -15,4 +15,5 @@ public:
 	void display_batteries_list();
 	void display_robot_models();
 	void help();
+	void display_receipt_header();
 };

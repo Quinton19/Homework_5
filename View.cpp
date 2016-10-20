@@ -1,4 +1,6 @@
 #include "View.h"
+#include <chrono>
+#include <ctime>
 
 void View::view_part_info(Robot_Part p)
 {
@@ -75,5 +77,17 @@ void View::display_robot_models()
 void View::help()
 {
 	cout << "Type a number into the computer and press ENTER to select the corresponding option on the menu.\n"
-		<< "See the Robbie Robot Shop user manual for more information on how the system works.\n\n";
+		<< "See the Robbie Robot Shop Manager user manual for more information on how the system works.\n\n";
+}
+
+void View::display_receipt_header()
+{
+	chrono::time_point<chrono::system_clock> now;
+	now = chrono::system_clock::now();
+	time_t time = chrono::system_clock::to_time_t(now);
+	cout << "-------------------------------------------------\n"
+		<< "          Robbie Robot Shop Model Order          \n"
+		<< "-------------------------------------------------\n"
+		<< "Date: " << ctime(&time) << "\n"
+		<< "Order:\n";
 }

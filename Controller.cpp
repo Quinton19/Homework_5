@@ -749,6 +749,7 @@ void Controller::order_robot_models()
 			cout << "Please select a model to order: ";
 			cin >> choice;
 			cin.ignore();
+			cout << "\n";
 
 			if (!cin)
 			{
@@ -757,7 +758,7 @@ void Controller::order_robot_models()
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				choice = -1;
 			}
-			else if (choice > shop.get_models().size())
+			else if (choice > shop.get_models().size() || choice <= 0)
 			{
 				cerr << "Invalid entry. Please try again.\n\n";
 			}
@@ -770,12 +771,17 @@ void Controller::order_robot_models()
 			cout << "How many of the " << shop.get_models()[choice - 1].get_name() << " robot models would you like to order? ";
 			cin >> quantity;
 			cin.ignore();
+			cout << "\n";
 
 			if (!cin)
 			{
 				cerr << "Invalid entry. Please try again.\n\n";
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+			else if (quantity < 0)
+			{
+				cerr << "Invalid entry. Please try again.\n\n";
 			}
 			else
 				break;
@@ -786,7 +792,13 @@ void Controller::order_robot_models()
 			<< "Total Price: $" << shop.get_models()[choice - 1].get_price() * quantity << "\n";
 		cout << "Would you like to place this order? [y/n] ";
 		cin >> correct;
+		cout << "\n";
 	} while (correct != 'y');
 
-	cout << "\nCongratulations on your order!\n\n";
+	view.display_receipt_header();
+	cout << shop.get_models()[choice - 1].get_name() << "\n"
+		<< "Model #" << shop.get_models()[choice - 1].get_model_num() << "\n"
+		<< "Quantity: " << quantity << "\n\n"
+		<< "Total: $" << shop.get_models()[choice - 1].get_price() * quantity << "\n"
+		<< "-------------------------------------------------\n\n";
 }
